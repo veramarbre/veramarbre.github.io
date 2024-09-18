@@ -89,7 +89,7 @@
     <script type="module">
       // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
 // Firebase configuration
@@ -127,6 +127,11 @@ if (loginForm) {
     e.preventDefault();
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const loginButton = document.querySelector(".login-button");
+    const loginError = document.getElementById("loginError");
+
+    // Show loading animation
+    loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -140,7 +145,12 @@ if (loginForm) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error("Error logging in:", errorCode, errorMessage);
+        loginError.textContent = "Login failed. Please check your credentials and try again.";
         showToast("Login failed. Please check your credentials and try again.");
+      })
+      .finally(() => {
+        // Reset loading animation
+        loginButton.innerHTML = 'Login';
       });
   });
 }
@@ -161,6 +171,7 @@ onAuthStateChanged(auth, (user) => {
     menuItems.innerHTML += '<li><a href="/Pages/Login/login.html" data-i18n="login">Login</a></li>';
   }
 });
+
     </script>
 
     <!-- External JS file -->
