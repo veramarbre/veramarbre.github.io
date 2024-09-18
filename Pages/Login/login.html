@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
   </head>
   <body>
     <!-- Header -->
@@ -26,8 +25,13 @@
         <nav role="navigation" aria-label="Main Navigation">
           <ul>
             <li><a href="../index.html" data-i18n="home">Home</a></li>
+            <li>
+              <a href="index.html#products" data-i18n="products">Products</a>
+            </li>
             <li><a href="index.html#about" data-i18n="about">About</a></li>
-            <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+            <li>
+              <a href="index.html#contact" data-i18n="contact">Contact</a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -37,23 +41,36 @@
     <main role="main">
       <section class="login-section">
         <div class="container">
-          <h2 data-i18n="adminLogin">Admin Login</h2>
-          <div class="login-box">
-            <input
-              type="email"
-              placeholder="Email"
-              aria-label="Email"
-              id="emailInput"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              aria-label="Password"
-              id="passwordInput"
-            />
-            <button aria-label="Login" id="loginButton">Login</button>
-            <div id="loginMessage"></div>
-          </div>
+          <h2>Admin Login</h2>
+          <p>This page is only for administrators. Please log in to continue.</p>
+          <form id="loginForm">
+            <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                aria-label="Email"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                aria-label="Password"
+                required
+              />
+              <i class="fas fa-eye" id="togglePassword"></i>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+            <div class="login-options">
+              <a href="#" id="forgotPassword">Forgot your password?</a>
+              <a href="#" id="createAccount">Create a new account</a>
+            </div>
+          </form>
         </div>
       </section>
     </main>
@@ -68,73 +85,6 @@
       </div>
     </footer>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
-        authDomain: "vera-marbre.firebaseapp.com",
-        databaseURL: "https://vera-marbre-default-rtdb.firebaseio.com",
-        projectId: "vera-marbre",
-        storageBucket: "vera-marbre.appspot.com",
-        messagingSenderId: "58963574008",
-        appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
-        measurementId: "G-KGP6L8PG9M",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-
-      // Login functionality
-      const loginButton = document.getElementById("loginButton");
-      const emailInput = document.getElementById("emailInput");
-      const passwordInput = document.getElementById("passwordInput");
-      const loginMessage = document.getElementById("loginMessage");
-
-      loginButton.addEventListener("click", async () => {
-        const email = emailInput.value;
-        const password = passwordInput.value;
-
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-          loginMessage.textContent = "Login successful!";
-          loginMessage.style.color = "green";
-          updateMenu();
-        } catch (error) {
-          loginMessage.textContent = "Login failed. Please try again.";
-          loginMessage.style.color = "red";
-        }
-      });
-
-      // Update menu based on authentication state
-      function updateMenu() {
-        const menu = document.querySelector("nav ul");
-        menu.innerHTML = `
-          <li><a href="../index.html" data-i18n="home">Home</a></li>
-          <li><a href="index.html#about" data-i18n="about">About</a></li>
-          <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
-        `;
-
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            menu.innerHTML += `<li><a href="#" id="logoutButton" data-i18n="logout">Logout</a></li>`;
-            document.getElementById("logoutButton").addEventListener("click", async () => {
-              await signOut(auth);
-              updateMenu();
-            });
-          } else {
-            menu.innerHTML += `<li><a href="login.html" data-i18n="login">Login</a></li>`;
-          }
-        });
-      }
-
-      // Initialize menu on page load
-      updateMenu();
-    </script>
-
-    <!-- External JS file -->
-    <script src="/Pages/Login/script.js"></script>
+    <script type="module" src="/Pages/Login/script.js"></script>
   </body>
 </html>
