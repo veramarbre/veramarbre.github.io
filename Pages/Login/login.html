@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - VERA MARBRE™</title>
+    <link rel="stylesheet" href="/Pages/Login/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header role="banner">
+      <div class="container">
+        <div class="menu-icon" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+          <a href="../index.html" aria-label="STONE™ Homepage">
+            <h1>VERA MARBRE™</h1>
+          </a>
+        </div>
+        <nav role="navigation" aria-label="Main Navigation">
+          <ul>
+            <li><a href="../index.html" data-i18n="home">Home</a></li>
+            <li><a href="index.html#about" data-i18n="about">About</a></li>
+            <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main">
+      <section class="login-section">
+        <div class="container">
+          <h2 data-i18n="adminLogin">Admin Login</h2>
+          <div class="login-box">
+            <input
+              type="email"
+              placeholder="Email"
+              aria-label="Email"
+              id="emailInput"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              aria-label="Password"
+              id="passwordInput"
+            />
+            <button aria-label="Login" id="loginButton">Login</button>
+            <div id="loginMessage"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+      <div class="container">
+        <p>
+          © 2023 VERA MARBRE™. All rights reserved. |
+          <a href="privacy.html" aria-label="Privacy Policy">Privacy Policy</a>
+        </p>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
+        authDomain: "vera-marbre.firebaseapp.com",
+        databaseURL: "https://vera-marbre-default-rtdb.firebaseio.com",
+        projectId: "vera-marbre",
+        storageBucket: "vera-marbre.appspot.com",
+        messagingSenderId: "58963574008",
+        appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
+        measurementId: "G-KGP6L8PG9M",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // Login functionality
+      const loginButton = document.getElementById("loginButton");
+      const emailInput = document.getElementById("emailInput");
+      const passwordInput = document.getElementById("passwordInput");
+      const loginMessage = document.getElementById("loginMessage");
+
+      loginButton.addEventListener("click", async () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          loginMessage.textContent = "Login successful!";
+          loginMessage.style.color = "green";
+          updateMenu();
+        } catch (error) {
+          loginMessage.textContent = "Login failed. Please try again.";
+          loginMessage.style.color = "red";
+        }
+      });
+
+      // Update menu based on authentication state
+      function updateMenu() {
+        const menu = document.querySelector("nav ul");
+        menu.innerHTML = `
+          <li><a href="../index.html" data-i18n="home">Home</a></li>
+          <li><a href="index.html#about" data-i18n="about">About</a></li>
+          <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+        `;
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            menu.innerHTML += `<li><a href="#" id="logoutButton" data-i18n="logout">Logout</a></li>`;
+            document.getElementById("logoutButton").addEventListener("click", async () => {
+              await signOut(auth);
+              updateMenu();
+            });
+          } else {
+            menu.innerHTML += `<li><a href="login.html" data-i18n="login">Login</a></li>`;
+          }
+        });
+      }
+
+      // Initialize menu on page load
+      updateMenu();
+    </script>
+
+    <!-- External JS file -->
+    <script src="/Pages/Login/script.js"></script>
+  </body>
+</html>
