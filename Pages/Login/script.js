@@ -1,8 +1,3 @@
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-
 // Smooth scrolling for navigation links
 document.querySelectorAll("nav a").forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
@@ -43,7 +38,7 @@ slidingMenu.innerHTML = `
       <div class="close-icon" aria-label="Close Menu">
           <i class="fas fa-times"></i>
       </div>
-      <ul id="menuItems">
+      <ul>
           <li><a href="../index.html" data-i18n="home">Home</a></li>
           <li><a href="/Pages/Products/products.html" data-i18n="products">Products</a></li>
           <li><a href="../index.html#about" data-i18n="about">About</a></li>
@@ -143,23 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     darkModeIcon.classList.replace("fa-sun", "fa-moon");
   }
-
-  // Check authentication state
-  onAuthStateChanged(auth, (user) => {
-    const menuItems = document.getElementById("menuItems");
-    if (user) {
-      // User is signed in
-      menuItems.innerHTML += '<li><a href="#" id="signOutButton" data-i18n="signOut">Sign Out</a></li>';
-      document.getElementById("signOutButton").addEventListener("click", () => {
-        signOut(auth).then(() => {
-          location.reload();
-        });
-      });
-    } else {
-      // No user is signed in
-      menuItems.innerHTML += '<li><a href="/Pages/Login/login.html" data-i18n="login">Login</a></li>';
-    }
-  });
 });
 
 // Example translations object
@@ -171,8 +149,6 @@ const translations = {
     contact: "Contact",
     ourProducts: "Our Products",
     search: "Search",
-    signOut: "Sign Out",
-    login: "Login",
   },
   fr: {
     home: "Accueil",
@@ -181,8 +157,6 @@ const translations = {
     contact: "Contact",
     ourProducts: "Nos Produits",
     search: "Chercher",
-    signOut: "Déconnexion",
-    login: "Connexion",
   },
   ar: {
     home: "الرئيسية",
@@ -191,8 +165,6 @@ const translations = {
     contact: "اتصل",
     ourProducts: "منتجاتنا",
     search: "بحث",
-    signOut: "تسجيل الخروج",
-    login: "تسجيل الدخول",
   },
 };
 
@@ -200,26 +172,11 @@ const translations = {
 const userLang = navigator.language.slice(0, 2);
 changeLanguage(translations[userLang] ? userLang : "en");
 
-// Login functionality
-const loginForm = document.getElementById("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("Logged in as:", user.email);
-        window.location.href = "/Pages/Products/products.html"; // Redirect to products page
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Error logging in:", errorCode, errorMessage);
-        alert("Login failed. Please check your credentials and try again.");
-      });
-  });
-}
+window.addEventListener("scroll", function () {
+  const header = document.querySelector("header");
+  if (window.scrollY > 50) {
+    header.classList.add("floating");
+  } else {
+    header.classList.remove("floating");
+  }
+});
