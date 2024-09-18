@@ -4,12 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Products - VERA MARBRE™</title>
-    <link rel="stylesheet" href="/Pages/Products/style.css" />
+    <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <style>
+      .loading-spinner {
+        display: none;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        margin: auto;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -19,16 +36,20 @@
           <i class="fas fa-bars"></i>
         </div>
         <div class="logo">
-          <a href="/index.html" aria-label="STONE™ Homepage">
+          <a href="../index.html" aria-label="STONE™ Homepage">
             <h1>VERA MARBRE™</h1>
           </a>
         </div>
         <nav role="navigation" aria-label="Main Navigation">
           <ul>
-            <li><a href="/index.html" data-i18n="home">Home</a></li>
-            <li><a href="index.html#products" data-i18n="products">Products</a></li>
+            <li><a href="../index.html" data-i18n="home">Home</a></li>
+            <li>
+              <a href="index.html#products" data-i18n="products">Products</a>
+            </li>
             <li><a href="index.html#about" data-i18n="about">About</a></li>
-            <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+            <li>
+              <a href="index.html#contact" data-i18n="contact">Contact</a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -40,61 +61,19 @@
         <div class="container">
           <h2 data-i18n="ourProducts">Our Products</h2>
           <div class="search-box">
-            <input type="text" placeholder="Search products..." aria-label="Search products" />
-            <button aria-label="Search">
+            <input
+              type="text"
+              placeholder="Search products..."
+              aria-label="Search products"
+              id="searchInput"
+            />
+            <button aria-label="Search" id="searchButton">
               <i class="fas fa-search"></i>
             </button>
           </div>
-          <div class="product-grid">
-            <div class="product">
-              <img src="https://www.shawstone.co.uk/wp-content/uploads/2018/07/Bianco-Carrara-Marble.jpg" alt="Carrara Marble Tiles" loading="lazy" />
-              <h3>Bianco Carrara</h3>
-            </div>
-            <div class="product">
-              <img src="https://marblegraniteslabs.com/wp-content/uploads/2022/02/Marquinia-Porcelain.jpg" alt="Natural Stone Fireplace" loading="lazy" />
-              <h3>Marquinia Porcelain</h3>
-            </div>
-            <div class="product">
-                <img src="https://marblegraniteslabs.com/wp-content/uploads/2022/02/Tempest-Gold-Porcelain.jpg" alt="Carrara Marble Tiles" loading="lazy" />
-                <h3>Tempest Gold</h3>
-              </div>
-              <div class="product">
-                <img src="https://www.shutterstock.com/image-photo/brown-italian-marble-texture-background-600nw-2441098135.jpg" alt="Black Granite Countertops" loading="lazy" />
-                <h3>Italien Brown</h3>
-              </div>
-              <div class="product">
-                <img src="https://www.chiswellfireplaces.com/wp-content/uploads/2014/05/Flaxman-600x600.jpg" alt="Natural Stone Fireplace" loading="lazy" />
-                <h3>Natural Stone Fireplace</h3>
-              </div>
-              <div class="product">
-                <img src="https://marblegraniteslabs.com/wp-content/uploads/2022/02/Taj-Imperiale-Porcelain.jpg" alt="Black Granite Countertops" loading="lazy" />
-                <h3>Taj Imperiale</h3>
-              </div>
-              <div class="product">
-                <img src="https://www.shawstone.co.uk/wp-content/uploads/2018/07/Bianco-Carrara-Marble.jpg" alt="Carrara Marble Tiles" loading="lazy" />
-                <h3>Bianco Carrara Marble</h3>
-              </div>
-              <div class="product">
-                <img src="https://img.staticmb.com/mbcontent/images/crop/uploads/2023/3/black-granite-kitchen-countertop_0_1200.jpg" alt="Black Granite Countertops" loading="lazy" />
-                <h3>Black Granite Countertops</h3>
-              </div>
-              <div class="product">
-                <img src="https://www.chiswellfireplaces.com/wp-content/uploads/2014/05/Flaxman-600x600.jpg" alt="Natural Stone Fireplace" loading="lazy" />
-                <h3>Natural Stone Fireplace</h3>
-              </div>
-              <div class="product">
-                <img src="https://www.shawstone.co.uk/wp-content/uploads/2018/07/Bianco-Carrara-Marble.jpg" alt="Carrara Marble Tiles" loading="lazy" />
-                <h3>Bianco Carrara Marble</h3>
-              </div>
-              <div class="product">
-                <img src="https://img.staticmb.com/mbcontent/images/crop/uploads/2023/3/black-granite-kitchen-countertop_0_1200.jpg" alt="Black Granite Countertops" loading="lazy" />
-                <h3>Black Granite Countertops</h3>
-              </div>
-              <div class="product">
-                <img src="https://www.chiswellfireplaces.com/wp-content/uploads/2014/05/Flaxman-600x600.jpg" alt="Natural Stone Fireplace" loading="lazy" />
-                <h3>Natural Stone Fireplace</h3>
-              </div>
-            <!-- Add more products as needed -->
+          <div class="loading-spinner" id="loadingSpinner"></div>
+          <div class="product-grid" id="productGrid">
+            <!-- Products will be dynamically loaded here -->
           </div>
         </div>
       </section>
@@ -110,7 +89,85 @@
       </div>
     </footer>
 
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+      import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
+        authDomain: "vera-marbre.firebaseapp.com",
+        databaseURL: "https://vera-marbre-default-rtdb.firebaseio.com",
+        projectId: "vera-marbre",
+        storageBucket: "vera-marbre.appspot.com",
+        messagingSenderId: "58963574008",
+        appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
+        measurementId: "G-KGP6L8PG9M",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      // Fetch products from Firebase Realtime Database
+      async function fetchProducts() {
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        loadingSpinner.style.display = "block"; // Show loading spinner
+
+        const dbRef = ref(database, "products");
+        const snapshot = await get(dbRef);
+        if (snapshot.exists()) {
+          const products = snapshot.val();
+          renderProducts(products);
+          setupSearch(products);
+        } else {
+          console.log("No data available");
+        }
+
+        loadingSpinner.style.display = "none"; // Hide loading spinner
+      }
+
+      // Render products in the HTML
+      function renderProducts(products) {
+        const productGrid = document.getElementById("productGrid");
+        productGrid.innerHTML = ""; // Clear existing content
+        for (const key in products) {
+          if (products.hasOwnProperty(key)) {
+            const product = products[key];
+            const productDiv = document.createElement("div");
+            productDiv.classList.add("product");
+            productDiv.innerHTML = `
+              <img src="${product.image_url}" alt="${product.description}" loading="lazy" />
+              <h3>${product.name}</h3>
+            `;
+            productGrid.appendChild(productDiv);
+          }
+        }
+      }
+
+      // Setup search functionality
+      function setupSearch(products) {
+        const searchInput = document.getElementById("searchInput");
+
+        searchInput.addEventListener("input", () => {
+          const query = searchInput.value.toLowerCase();
+          const filteredProducts = {};
+          for (const key in products) {
+            if (products.hasOwnProperty(key)) {
+              const product = products[key];
+              if (product.name.toLowerCase().includes(query) || product.description.toLowerCase().includes(query)) {
+                filteredProducts[key] = product;
+              }
+            }
+          }
+          renderProducts(filteredProducts);
+        });
+      }
+
+      // Fetch and render products on page load
+      fetchProducts();
+    </script>
+
     <!-- External JS file -->
-    <script src="/Pages/Products/script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
