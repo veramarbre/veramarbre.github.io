@@ -14,6 +14,7 @@
   --button-color: #3498db;
   --button-hover-color: #2980b9;
   --input-icon-color: #555;
+  --error-color: #e74c3c;
 }
 
 /* Dark mode variables */
@@ -28,6 +29,7 @@
   --button-color: #3498db;
   --button-hover-color: #2980b9;
   --input-icon-color: #a0a0a0;
+  --error-color: #e74c3c;
 }
 
 /* Base styles */
@@ -425,6 +427,12 @@ nav ul li a:hover::after {
   color: var(--button-hover-color);
 }
 
+.error-message {
+  color: var(--error-color);
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -439,6 +447,26 @@ nav ul li a:hover::after {
 
 .login-section {
   animation: fadeIn 1s ease-in-out;
+}
+
+/* Toast messages */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
 }
 
 /* Responsive design */
@@ -466,24 +494,3 @@ nav ul li a:hover::after {
     justify-content: flex-end;
   }
 }
-
-/* Toast messages */
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  animation: fadeInOut 3s ease-in-out;
-}
-
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 1; }
-}
-
