@@ -67,34 +67,6 @@
       </div>
     </footer>
 
-    <!-- Sliding Menu -->
-    <div class="sliding-menu">
-      <div class="close-icon" aria-label="Close Menu">
-        <i class="fas fa-times"></i>
-      </div>
-      <ul>
-        <li><a href="../index.html" data-i18n="home">Home</a></li>
-        <li><a href="index.html#about" data-i18n="about">About</a></li>
-        <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
-        <li id="authMenuItem">
-          <!-- This will be dynamically populated based on auth state -->
-        </li>
-      </ul>
-      <div class="menu-bottom">
-        <div id="language-switcher">
-          <i class="fas fa-globe"></i>
-          <select id="language-select" aria-label="Select Language">
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="ar">العربية</option>
-          </select>
-        </div>
-        <div id="dark-mode-toggle">
-          <i class="fas fa-moon"></i>
-        </div>
-      </div>
-    </div>
-
     <script type="module">// admin-login.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
