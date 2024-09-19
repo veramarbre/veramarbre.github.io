@@ -215,23 +215,36 @@ signOutButton.addEventListener('click', async () => {
 
 // Check auth state
 onAuthStateChanged(auth, (user) => {
+  const loginHeader = document.querySelector('.login-section h2');
+  const loginDescription = document.querySelector('.login-section p.login-description');
+  const signOutButton = document.getElementById('signOutButton');
+  const adminInfo = document.getElementById('adminInfo');
+  const loginForm = document.getElementById('loginForm');
+  const loginMessage = document.getElementById('loginMessage');
+  const authMenuItem = document.getElementById('authMenuItem');
+
   if (user) {
     // User is signed in
     loginMessage.textContent = `Welcome, ${user.email}!`;
     loginForm.style.display = 'none';
-    document.getElementById('adminInfo').style.display = 'block';
-    document.getElementById('signOutButton').style.display = 'block'; // Show sign-out button
+    adminInfo.style.display = 'block';
+    signOutButton.style.display = 'block';
+    loginHeader.style.display = 'none';
+    loginDescription.style.display = 'none';
     authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
     document.getElementById('logoutLink').addEventListener('click', handleLogout);
   } else {
     // User is signed out
     loginForm.style.display = 'block';
     loginMessage.textContent = '';
-    document.getElementById('adminInfo').style.display = 'none';
-    document.getElementById('signOutButton').style.display = 'none'; // Hide sign-out button
+    adminInfo.style.display = 'none';
+    signOutButton.style.display = 'none';
+    loginHeader.style.display = 'block';
+    loginDescription.style.display = 'block';
     authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
   }
 });
+
 
 
 // Animation for login form
