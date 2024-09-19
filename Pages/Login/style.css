@@ -554,12 +554,6 @@ footer a:hover {
 }
 
 /* Sign Out button styles */
-.sign-out-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px; /* Adjust as needed */
-}
-
 #signOutButton {
   background-color: var(--button-color);
   color: var(--primary-color);
