@@ -81,11 +81,11 @@ p {
   margin-bottom: 15px;
 }
 
-/* Header styles */
+/* Floating Header */
 header {
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
-  position: fixed; /* Change to fixed */
+  position: fixed; /* Fixed position to make it float */
   top: 0;
   left: 0;
   right: 0;
@@ -553,20 +553,6 @@ footer a:hover {
   }
 }
 
-/* Logout Button Styles */
-#signOutButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 24px; /* Adjust size as needed */
-    color: #333; /* Adjust color as needed */
-}
-
-#signOutButton:hover {
-    color: #f00; /* Change color on hover */
-}
-
-
 /* Admin Info Styles */
 #adminInfo {
   text-align: center;
@@ -593,3 +579,23 @@ footer a:hover {
   margin: 5px 0;
 }
 
+/* Logout Button Styles */
+#signOutButton {
+  background: none;
+  border: 2px solid #e74c3c; /* Red border */
+  color: #e74c3c; /* Red text color */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+#signOutButton:hover {
+  background-color: #e74c3c; /* Red background on hover */
+  color: #fff; /* White text on hover */
+}
+
+#signOutButton i {
+  margin-right: 8px; /* Add some space between the icon and text */
+}
