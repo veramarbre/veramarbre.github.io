@@ -35,30 +35,31 @@ const menuIcon = document.querySelector(".menu-icon");
 const slidingMenu = document.createElement("div");
 slidingMenu.classList.add("sliding-menu");
 slidingMenu.innerHTML = `
-      <div class="close-icon" aria-label="Close Menu">
-          <i class="fas fa-times"></i>
-      </div>
-      <ul>
-          <li><a href="../index.html" data-i18n="home">Home</a></li>
-          <li><a href="/Pages/Products/products.html" data-i18n="products">Products</a></li>
-          <li><a href="../index.html#about" data-i18n="about">About</a></li>
-          <li><a href="../index.html#contact" data-i18n="contact">Contact</a></li>
-          <li><a href="/admin-panel.html">Admin Panel</a></li>
-      </ul>
-      <div class="menu-bottom">
-          <div id="language-switcher">
-              <i class="fas fa-globe"></i>
-              <select id="language-select" aria-label="Select Language">
-                  <option value="en">English</option>
-                  <option value="fr">Français</option>
-                  <option value="ar">العربية</option>
-              </select>
-          </div>
-          <div id="dark-mode-toggle">
-              <i class="fas fa-moon"></i>
-          </div>
-      </div>
-  `;
+  <div class="close-icon" aria-label="Close Menu">
+    <i class="fas fa-times"></i>
+  </div>
+  <ul>
+    <li><a href="index.html" data-i18n="home">Home</a></li>
+    <li><a href="/Pages/Products/products.html" data-i18n="products">Products</a></li>
+    <li><a href="index.html#about" data-i18n="about">About</a></li>
+    <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+    <li><a href="/Pages/Login/login.html">Admin Panel</a></li>
+  </ul>
+  <div class="menu-bottom">
+    <button id="signOutButton" style="display: none;" aria-label="Sign Out">Sign Out</button>
+    <div id="language-switcher">
+      <i class="fas fa-globe"></i>
+      <select id="language-select" aria-label="Select Language">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+    <div id="dark-mode-toggle">
+      <i class="fas fa-moon"></i>
+    </div>
+  </div>
+`;
 document.body.appendChild(slidingMenu);
 
 menuIcon.addEventListener("click", () => {
@@ -72,6 +73,27 @@ document.querySelector(".close-icon").addEventListener("click", () => {
 document.addEventListener("click", (event) => {
   if (!slidingMenu.contains(event.target) && !menuIcon.contains(event.target)) {
     slidingMenu.classList.remove("open");
+  }
+});
+
+// Handle sign out
+const signOutButton = document.getElementById('signOutButton');
+signOutButton.addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    alert('Signed out successfully!');
+    signOutButton.style.display = 'none';
+  } catch (error) {
+    alert('Error signing out: ' + error.message);
+  }
+});
+
+// Check auth state and show/hide sign out button
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    signOutButton.style.display = 'block';
+  } else {
+    signOutButton.style.display = 'none';
   }
 });
 
