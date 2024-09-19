@@ -85,8 +85,13 @@ p {
 header {
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
-  transition: top 0.3s ease;
+  position: fixed; /* Change to fixed */
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
+  z-index: 1000; /* Ensure header stays on top */
+  transition: background-color var(--transition-speed);
 }
 
 header.floating {
