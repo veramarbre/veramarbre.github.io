@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login - VERA MARBRE™</title>
-    <link rel="stylesheet" href="/Pages/Login/style.css" />
+    <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
   </head>
   <body>
     <!-- Header -->
@@ -25,13 +26,8 @@
         <nav role="navigation" aria-label="Main Navigation">
           <ul>
             <li><a href="../index.html" data-i18n="home">Home</a></li>
-            <li>
-              <a href="index.html#products" data-i18n="products">Products</a>
-            </li>
             <li><a href="index.html#about" data-i18n="about">About</a></li>
-            <li>
-              <a href="index.html#contact" data-i18n="contact">Contact</a>
-            </li>
+            <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
           </ul>
         </nav>
       </div>
@@ -41,37 +37,21 @@
     <main role="main">
       <section class="login-section">
         <div class="container">
-          <h2>Admin Login</h2>
-          <p>This page is only for administrators. Please log in to continue.</p>
-          <form id="loginForm">
-            <div class="input-group">
-              <i class="fas fa-envelope"></i>
-              <input
-                type="email"
-                id="email"
-                placeholder="Email"
-                aria-label="Email"
-                required
-              />
-            </div>
-            <div class="input-group">
-              <i class="fas fa-lock"></i>
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                aria-label="Password"
-                required
-              />
-              <i class="fas fa-eye" id="togglePassword"></i>
-            </div>
-            <button type="submit" class="login-button">Login</button>
-            <div class="login-options">
-              <a href="#" id="forgotPassword">Forgot your password?</a>
-              <a href="#" id="createAccount">Create a new account</a>
-            </div>
-            <div id="loginError" class="error-message"></div>
-          </form>
+          <h2 data-i18n="adminLogin">Administrator Login</h2>
+          <div class="login-form">
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+              </div>
+              <button type="submit" class="login-btn">Login</button>
+            </form>
+          </div>
+          <div id="loginMessage"></div>
         </div>
       </section>
     </main>
@@ -86,8 +66,35 @@
       </div>
     </footer>
 
-    <!-- External JS file -->
-    <script src="/Pages/Login/script.js"></script>
-    
+    <!-- Sliding Menu -->
+    <div class="sliding-menu">
+      <div class="close-icon" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+      </div>
+      <ul>
+        <li><a href="../index.html" data-i18n="home">Home</a></li>
+        <li><a href="index.html#about" data-i18n="about">About</a></li>
+        <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+        <li id="authMenuItem">
+          <!-- This will be dynamically populated based on auth state -->
+        </li>
+      </ul>
+      <div class="menu-bottom">
+        <div id="language-switcher">
+          <i class="fas fa-globe"></i>
+          <select id="language-select" aria-label="Select Language">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+        <div id="dark-mode-toggle">
+          <i class="fas fa-moon"></i>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="admin-login.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
