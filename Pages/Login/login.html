@@ -64,8 +64,6 @@
               </button>
             </form>
             <div class="form-links">
-              <a href="#" id="forgotPassword">Forgot Password?</a>
-              <a href="#" id="createAccount">Create New Account</a>
             </div>
           </div>
           <div id="loginMessage"></div>
@@ -87,7 +85,7 @@
       
   // admin-login.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
@@ -110,8 +108,6 @@ const authMenuItem = document.getElementById('authMenuItem');
 const togglePassword = document.getElementById('togglePassword');
 const passwordInput = document.getElementById('password');
 const loginBtn = loginForm.querySelector('.login-btn');
-const forgotPasswordLink = document.getElementById('forgotPassword');
-const createAccountLink = document.getElementById('createAccount');
 
 // Toggle password visibility
 togglePassword.addEventListener('click', function() {
@@ -175,50 +171,6 @@ async function handleLogout() {
   }
 }
 
-// Handle forgot password
-forgotPasswordLink.addEventListener('click', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  if (!email) {
-    loginMessage.textContent = 'Please enter your email address.';
-    loginMessage.style.color = 'red';
-    loginMessage.classList.add('message-animation');
-    return;
-  }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    loginMessage.textContent = 'Password reset email sent. Please check your inbox.';
-    loginMessage.style.color = 'green';
-    loginMessage.classList.add('message-animation');
-  } catch (error) {
-    loginMessage.textContent = getErrorMessage(error.code);
-    loginMessage.style.color = 'red';
-    loginMessage.classList.add('message-animation');
-  }
-});
-
-// Handle create new account
-createAccountLink.addEventListener('click', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  if (!email || !password) {
-    loginMessage.textContent = 'Please enter both email and password.';
-    loginMessage.style.color = 'red';
-    loginMessage.classList.add('message-animation');
-    return;
-  }
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    loginMessage.textContent = 'Account created successfully! You can now log in.';
-    loginMessage.style.color = 'green';
-    loginMessage.classList.add('message-animation');
-  } catch (error) {
-    loginMessage.textContent = getErrorMessage(error.code);
-    loginMessage.style.color = 'red';
-    loginMessage.classList.add('message-animation');
-  }
-});
 
 // Error message handler
 function getErrorMessage(errorCode) {
