@@ -76,27 +76,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// Handle sign out
-const signOutButton = document.getElementById('signOutButton');
-signOutButton.addEventListener('click', async () => {
-  try {
-    await signOut(auth);
-    alert('Signed out successfully!');
-    signOutButton.style.display = 'none';
-  } catch (error) {
-    alert('Error signing out: ' + error.message);
-  }
-});
-
-// Check auth state and show/hide sign out button
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    signOutButton.style.display = 'block';
-  } else {
-    signOutButton.style.display = 'none';
-  }
-});
-
 // Language switcher functionality
 const languageSelect = document.getElementById("language-select");
 
