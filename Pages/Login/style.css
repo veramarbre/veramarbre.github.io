@@ -87,6 +87,7 @@ header {
   box-shadow: var(--box-shadow);
   transition: top 0.3s ease;
   width: 100%;
+  position: fixed;
 }
 
 header.floating {
