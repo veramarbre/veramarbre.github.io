@@ -92,82 +92,84 @@
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-      import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
-        authDomain: "vera-marbre.firebaseapp.com",
-        databaseURL: "https://vera-marbre-default-rtdb.firebaseio.com",
-        projectId: "vera-marbre",
-        storageBucket: "vera-marbre.appspot.com",
-        messagingSenderId: "58963574008",
-        appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
-        measurementId: "G-KGP6L8PG9M",
-      };
+const firebaseConfig = {
+  apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
+  authDomain: "vera-marbre.firebaseapp.com",
+  databaseURL: "https://vera-marbre-default-rtdb.firebaseio.com",
+  projectId: "vera-marbre",
+  storageBucket: "vera-marbre.appspot.com",
+  messagingSenderId: "58963574008",
+  appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
+  measurementId: "G-KGP6L8PG9M",
+};
 
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const database = getDatabase(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth(app);
 
-      // Fetch products from Firebase Realtime Database
-      async function fetchProducts() {
-        const loadingSpinner = document.getElementById("loadingSpinner");
-        loadingSpinner.style.display = "block"; // Show loading spinner
+// Fetch products from Firebase Realtime Database
+async function fetchProducts() {
+  const loadingSpinner = document.getElementById("loadingSpinner");
+  loadingSpinner.style.display = "block"; // Show loading spinner
 
-        const dbRef = ref(database, "products");
-        const snapshot = await get(dbRef);
-        if (snapshot.exists()) {
-          const products = snapshot.val();
-          renderProducts(products);
-          setupSearch(products);
-        } else {
-          console.log("No data available");
+  const dbRef = ref(database, "products");
+  const snapshot = await get(dbRef);
+  if (snapshot.exists()) {
+    const products = snapshot.val();
+    renderProducts(products);
+    setupSearch(products);
+  } else {
+    console.log("No data available");
+  }
+
+  loadingSpinner.style.display = "none"; // Hide loading spinner
+}
+
+// Render products in the HTML
+function renderProducts(products) {
+  const productGrid = document.getElementById("productGrid");
+  productGrid.innerHTML = ""; // Clear existing content
+  for (const key in products) {
+    if (products.hasOwnProperty(key)) {
+      const product = products[key];
+      const productDiv = document.createElement("div");
+      productDiv.classList.add("product");
+      productDiv.innerHTML = `
+        <img src="${product.image_url}" alt="${product.description}" loading="lazy" />
+        <h3>${product.name}</h3>
+      `;
+      productGrid.appendChild(productDiv);
+    }
+  }
+}
+
+// Setup search functionality
+function setupSearch(products) {
+  const searchInput = document.getElementById("searchInput");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    const filteredProducts = {};
+    for (const key in products) {
+      if (products.hasOwnProperty(key)) {
+        const product = products[key];
+        if (product.name.toLowerCase().includes(query) || product.description.toLowerCase().includes(query)) {
+          filteredProducts[key] = product;
         }
-
-        loadingSpinner.style.display = "none"; // Hide loading spinner
       }
+    }
+    renderProducts(filteredProducts);
+  });
+}
 
-      // Render products in the HTML
-      function renderProducts(products) {
-        const productGrid = document.getElementById("productGrid");
-        productGrid.innerHTML = ""; // Clear existing content
-        for (const key in products) {
-          if (products.hasOwnProperty(key)) {
-            const product = products[key];
-            const productDiv = document.createElement("div");
-            productDiv.classList.add("product");
-            productDiv.innerHTML = `
-              <img src="${product.image_url}" alt="${product.description}" loading="lazy" />
-              <h3>${product.name}</h3>
-            `;
-            productGrid.appendChild(productDiv);
-          }
-        }
-      }
+// Fetch and render products on page load
+fetchProducts();
 
-      // Setup search functionality
-      function setupSearch(products) {
-        const searchInput = document.getElementById("searchInput");
-
-        searchInput.addEventListener("input", () => {
-          const query = searchInput.value.toLowerCase();
-          const filteredProducts = {};
-          for (const key in products) {
-            if (products.hasOwnProperty(key)) {
-              const product = products[key];
-              if (product.name.toLowerCase().includes(query) || product.description.toLowerCase().includes(query)) {
-                filteredProducts[key] = product;
-              }
-            }
-          }
-          renderProducts(filteredProducts);
-        });
-      }
-
-      // Fetch and render products on page load
-      fetchProducts();
-
-      // Handle sign out
+// Handle sign out
 const signOutButton = document.getElementById('signOutButton');
 signOutButton.addEventListener('click', async () => {
   try {
