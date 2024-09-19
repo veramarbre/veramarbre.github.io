@@ -345,14 +345,14 @@ nav ul li a:hover::after {
 
 /* Login Section */
 .login-section {
-  padding: 50px 0;
+  padding: 40px 0;
   background-color: var(--background-color);
   transition: background-color var(--transition-speed);
 }
 
 .login-section h2 {
   color: var(--text-color); /* Ensure this color contrasts with the background */
-  margin-top: 20px; /* Adjust the value as needed */
+  margin-top: 30px; /* Adjust the value as needed */
 }
 
 .login-description {
