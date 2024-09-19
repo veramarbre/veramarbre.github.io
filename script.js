@@ -45,6 +45,7 @@ slidingMenu.innerHTML = `
         <li><a href="/Pages/Products/products.html" data-i18n="products">Products</a></li>
         <li><a href="#about" data-i18n="about">About</a></li>
         <li><a href="#contact" data-i18n="contact">Contact</a></li>
+        <li><a href="/Pages/Login/login.html">Admin Panel</a></li>
     </ul>
     <div class="menu-bottom">
         <div id="language-switcher">
