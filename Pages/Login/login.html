@@ -220,6 +220,7 @@ onAuthStateChanged(auth, (user) => {
     loginMessage.textContent = `Welcome, ${user.email}!`;
     loginForm.style.display = 'none';
     document.getElementById('adminInfo').style.display = 'block';
+    document.getElementById('signOutButton').style.display = 'block'; // Show sign-out button
     authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
     document.getElementById('logoutLink').addEventListener('click', handleLogout);
   } else {
@@ -227,10 +228,10 @@ onAuthStateChanged(auth, (user) => {
     loginForm.style.display = 'block';
     loginMessage.textContent = '';
     document.getElementById('adminInfo').style.display = 'none';
+    document.getElementById('signOutButton').style.display = 'none'; // Hide sign-out button
     authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
   }
 });
-
 
 
 // Animation for login form
