@@ -552,3 +552,19 @@ footer a:hover {
     margin-top: 10px;
   }
 }
+
+/* Sign Out button styles */
+#signOutButton {
+  background-color: var(--button-color);
+  color: var(--primary-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+#signOutButton:hover {
+  background-color: var(--button-hover-color);
+}
