@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login - VERA MARBRE™</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/Pages/Login/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -94,7 +94,86 @@
       </div>
     </div>
 
-    <script type="module" src="admin-login.js"></script>
-    <script src="script.js"></script>
+    <script type="module">// admin-login.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
+  authDomain: "vera-marbre.firebaseapp.com",
+  projectId: "vera-marbre",
+  storageBucket: "vera-marbre.appspot.com",
+  messagingSenderId: "58963574008",
+  appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
+  measurementId: "G-KGP6L8PG9M",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// DOM elements
+const loginForm = document.getElementById('loginForm');
+const loginMessage = document.getElementById('loginMessage');
+const authMenuItem = document.getElementById('authMenuItem');
+
+// Check auth state
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in
+    loginMessage.textContent = `Welcome, ${user.email}!`;
+    loginForm.style.display = 'none';
+    authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
+    document.getElementById('logoutLink').addEventListener('click', handleLogout);
+  } else {
+    // User is signed out
+    loginForm.style.display = 'block';
+    loginMessage.textContent = '';
+    authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
+  }
+});
+
+// Handle login
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    loginMessage.textContent = 'Login successful!';
+    loginMessage.style.color = 'green';
+    // Add animation class
+    loginMessage.classList.add('message-animation');
+  } catch (error) {
+    loginMessage.textContent = `Error: ${error.message}`;
+    loginMessage.style.color = 'red';
+    // Add animation class
+    loginMessage.classList.add('message-animation');
+  }
+});
+
+// Handle logout
+async function handleLogout() {
+  try {
+    await signOut(auth);
+    loginMessage.textContent = 'Logged out successfully!';
+    loginMessage.style.color = 'green';
+    // Add animation class
+    loginMessage.classList.add('message-animation');
+  } catch (error) {
+    loginMessage.textContent = `Error: ${error.message}`;
+    loginMessage.style.color = 'red';
+    // Add animation class
+    loginMessage.classList.add('message-animation');
+  }
+}
+
+// Animation for login form
+loginForm.classList.add('form-animation');
+      
+</script>
+    
+    <script src="/Pages/Login/script.js"></script>
   </body>
 </html>
