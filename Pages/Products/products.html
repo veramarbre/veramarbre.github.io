@@ -187,8 +187,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     signOutButton.style.display = 'block';
     console.log('User is signed in:', user);
-    // You can redirect to the admin panel or show specific content
-    window.location.href = '/admin-panel.html'; // Example redirect
+    
   } else {
     signOutButton.style.display = 'none';
     console.log('No user is signed in');
