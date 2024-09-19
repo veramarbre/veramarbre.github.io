@@ -87,18 +87,14 @@ header {
   box-shadow: var(--box-shadow);
   transition: top 0.3s ease;
   width: 100%;
-  position: fixed;
-}
-
-header.floating {
-  position: fixed;
+  position: fixed; /* Fixed position to make it float */
   top: 0;
   left: 0;
   right: 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 1000; /* Ensure header stays on top */
 }
 
+/* Container inside the header */
 header .container {
   display: flex;
   justify-content: space-between;
