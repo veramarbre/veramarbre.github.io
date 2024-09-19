@@ -164,6 +164,9 @@
         });
       }
 
+      // Fetch and render products on page load
+      fetchProducts();
+
       // Handle sign out
 const signOutButton = document.getElementById('signOutButton');
 signOutButton.addEventListener('click', async () => {
@@ -184,9 +187,7 @@ onAuthStateChanged(auth, (user) => {
     signOutButton.style.display = 'none';
   }
 });
-
-      // Fetch and render products on page load
-      fetchProducts();
+      
     </script>
 
     <!-- External JS file -->
