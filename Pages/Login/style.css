@@ -347,13 +347,18 @@ nav ul li a:hover::after {
   }
 }
 
-/* Add these styles to your existing CSS file */
-
 /* Login Section */
 .login-section {
   padding: 50px 0;
   background-color: var(--background-color);
   transition: background-color var(--transition-speed);
+}
+
+.login-description {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  color: var(--text-color);
 }
 
 .login-form {
@@ -375,9 +380,29 @@ nav ul li a:hover::after {
   color: var(--text-color);
 }
 
-.form-group input {
+.input-icon-wrapper {
+  position: relative;
+}
+
+.input-icon-wrapper i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-color);
+}
+
+.input-icon-wrapper i:first-child {
+  left: 10px;
+}
+
+.input-icon-wrapper i.toggle-password {
+  right: 10px;
+  cursor: pointer;
+}
+
+.input-icon-wrapper input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 40px;
   border: 1px solid var(--accent-color);
   border-radius: 5px;
   background-color: var(--background-color);
@@ -393,10 +418,49 @@ nav ul li a:hover::after {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color var(--transition-speed);
+  position: relative;
 }
 
 .login-btn:hover {
   background-color: var(--secondary-color);
+}
+
+.login-btn span {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.login-btn i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.login-btn.loading span {
+  opacity: 0;
+}
+
+.login-btn.loading i {
+  opacity: 1;
+}
+
+.form-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.form-links a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: color var(--transition-speed);
+}
+
+.form-links a:hover {
+  color: var(--secondary-color);
 }
 
 #loginMessage {
@@ -428,5 +492,14 @@ nav ul li a:hover::after {
 @media (max-width: 768px) {
   .login-form {
     padding: 20px;
+  }
+  
+  .form-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-links a {
+    margin-bottom: 10px;
   }
 }
