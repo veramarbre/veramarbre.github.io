@@ -3,13 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Login - VERA MARBRE™</title>
+    <title>Products - VERA MARBRE™</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+    <style>
+      .loading-spinner {
+        display: none;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        margin: auto;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -26,8 +43,13 @@
         <nav role="navigation" aria-label="Main Navigation">
           <ul>
             <li><a href="../index.html" data-i18n="home">Home</a></li>
+            <li>
+              <a href="index.html#products" data-i18n="products">Products</a>
+            </li>
             <li><a href="index.html#about" data-i18n="about">About</a></li>
-            <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+            <li>
+              <a href="index.html#contact" data-i18n="contact">Contact</a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -35,23 +57,24 @@
 
     <!-- Main Content -->
     <main role="main">
-      <section class="login-section">
+      <section class="products-section">
         <div class="container">
-          <h2 data-i18n="adminLogin">Administrator Login</h2>
-          <div class="login-form">
-            <form id="loginForm">
-              <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-              </div>
-              <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-              </div>
-              <button type="submit" class="login-btn">Login</button>
-            </form>
+          <h2 data-i18n="ourProducts">Our Products</h2>
+          <div class="search-box">
+            <input
+              type="text"
+              placeholder="Search products..."
+              aria-label="Search products"
+              id="searchInput"
+            />
+            <button aria-label="Search" id="searchButton">
+              <i class="fas fa-search"></i>
+            </button>
           </div>
-          <div id="loginMessage"></div>
+          <div class="loading-spinner" id="loadingSpinner"></div>
+          <div class="product-grid" id="productGrid">
+            <!-- Products will be dynamically loaded here -->
+          </div>
         </div>
       </section>
     </main>
@@ -66,35 +89,86 @@
       </div>
     </footer>
 
-    <!-- Sliding Menu -->
-    <div class="sliding-menu">
-      <div class="close-icon" aria-label="Close Menu">
-        <i class="fas fa-times"></i>
-      </div>
-      <ul>
-        <li><a href="../index.html" data-i18n="home">Home</a></li>
-        <li><a href="index.html#about" data-i18n="about">About</a></li>
-        <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
-        <li id="authMenuItem">
-          <!-- This will be dynamically populated based on auth state -->
-        </li>
-      </ul>
-      <div class="menu-bottom">
-        <div id="language-switcher">
-          <i class="fas fa-globe"></i>
-          <select id="language-select" aria-label="Select Language">
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="ar">العربية</option>
-          </select>
-        </div>
-        <div id="dark-mode-toggle">
-          <i class="fas fa-moon"></i>
-        </div>
-      </div>
-    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+      import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
-    <script type="module" src="admin-login.js"></script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
+        authDomain: "vera-marbre.firebaseapp.com",
+        databaseURL: "https://vera-marbre-default-rtdb.firebaseio.com",
+        projectId: "vera-marbre",
+        storageBucket: "vera-marbre.appspot.com",
+        messagingSenderId: "58963574008",
+        appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
+        measurementId: "G-KGP6L8PG9M",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+
+      // Fetch products from Firebase Realtime Database
+      async function fetchProducts() {
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        loadingSpinner.style.display = "block"; // Show loading spinner
+
+        const dbRef = ref(database, "products");
+        const snapshot = await get(dbRef);
+        if (snapshot.exists()) {
+          const products = snapshot.val();
+          renderProducts(products);
+          setupSearch(products);
+        } else {
+          console.log("No data available");
+        }
+
+        loadingSpinner.style.display = "none"; // Hide loading spinner
+      }
+
+      // Render products in the HTML
+      function renderProducts(products) {
+        const productGrid = document.getElementById("productGrid");
+        productGrid.innerHTML = ""; // Clear existing content
+        for (const key in products) {
+          if (products.hasOwnProperty(key)) {
+            const product = products[key];
+            const productDiv = document.createElement("div");
+            productDiv.classList.add("product");
+            productDiv.innerHTML = `
+              <img src="${product.image_url}" alt="${product.description}" loading="lazy" />
+              <h3>${product.name}</h3>
+            `;
+            productGrid.appendChild(productDiv);
+          }
+        }
+      }
+
+      // Setup search functionality
+      function setupSearch(products) {
+        const searchInput = document.getElementById("searchInput");
+
+        searchInput.addEventListener("input", () => {
+          const query = searchInput.value.toLowerCase();
+          const filteredProducts = {};
+          for (const key in products) {
+            if (products.hasOwnProperty(key)) {
+              const product = products[key];
+              if (product.name.toLowerCase().includes(query) || product.description.toLowerCase().includes(query)) {
+                filteredProducts[key] = product;
+              }
+            }
+          }
+          renderProducts(filteredProducts);
+        });
+      }
+
+      // Fetch and render products on page load
+      fetchProducts();
+    </script>
+
+    <!-- External JS file -->
     <script src="script.js"></script>
   </body>
 </html>
+Provide Code for Review - Claude
