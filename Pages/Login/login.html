@@ -82,9 +82,11 @@
       </div>
     </footer>
 
-    <script type="module">// admin-login.js
+    <script type="module">
+      
+  // admin-login.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
@@ -104,6 +106,19 @@ const auth = getAuth(app);
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('loginMessage');
 const authMenuItem = document.getElementById('authMenuItem');
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('password');
+const loginBtn = loginForm.querySelector('.login-btn');
+const forgotPasswordLink = document.getElementById('forgotPassword');
+const createAccountLink = document.getElementById('createAccount');
+
+// Toggle password visibility
+togglePassword.addEventListener('click', function() {
+  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+  passwordInput.setAttribute('type', type);
+  this.classList.toggle('fa-eye');
+  this.classList.toggle('fa-eye-slash');
+});
 
 // Check auth state
 onAuthStateChanged(auth, (user) => {
@@ -127,17 +142,21 @@ loginForm.addEventListener('submit', async (e) => {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
+  // Show loading spinner
+  loginBtn.classList.add('loading');
+
   try {
     await signInWithEmailAndPassword(auth, email, password);
     loginMessage.textContent = 'Login successful!';
     loginMessage.style.color = 'green';
-    // Add animation class
     loginMessage.classList.add('message-animation');
   } catch (error) {
-    loginMessage.textContent = `Error: ${error.message}`;
+    loginMessage.textContent = getErrorMessage(error.code);
     loginMessage.style.color = 'red';
-    // Add animation class
     loginMessage.classList.add('message-animation');
+  } finally {
+    // Hide loading spinner
+    loginBtn.classList.remove('loading');
   }
 });
 
@@ -147,13 +166,76 @@ async function handleLogout() {
     await signOut(auth);
     loginMessage.textContent = 'Logged out successfully!';
     loginMessage.style.color = 'green';
-    // Add animation class
     loginMessage.classList.add('message-animation');
   } catch (error) {
-    loginMessage.textContent = `Error: ${error.message}`;
+    loginMessage.textContent = getErrorMessage(error.code);
     loginMessage.style.color = 'red';
-    // Add animation class
     loginMessage.classList.add('message-animation');
+  }
+}
+
+// Handle forgot password
+forgotPasswordLink.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  if (!email) {
+    loginMessage.textContent = 'Please enter your email address.';
+    loginMessage.style.color = 'red';
+    loginMessage.classList.add('message-animation');
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    loginMessage.textContent = 'Password reset email sent. Please check your inbox.';
+    loginMessage.style.color = 'green';
+    loginMessage.classList.add('message-animation');
+  } catch (error) {
+    loginMessage.textContent = getErrorMessage(error.code);
+    loginMessage.style.color = 'red';
+    loginMessage.classList.add('message-animation');
+  }
+});
+
+// Handle create new account
+createAccountLink.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  if (!email || !password) {
+    loginMessage.textContent = 'Please enter both email and password.';
+    loginMessage.style.color = 'red';
+    loginMessage.classList.add('message-animation');
+    return;
+  }
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    loginMessage.textContent = 'Account created successfully! You can now log in.';
+    loginMessage.style.color = 'green';
+    loginMessage.classList.add('message-animation');
+  } catch (error) {
+    loginMessage.textContent = getErrorMessage(error.code);
+    loginMessage.style.color = 'red';
+    loginMessage.classList.add('message-animation');
+  }
+});
+
+// Error message handler
+function getErrorMessage(errorCode) {
+  switch (errorCode) {
+    case 'auth/invalid-email':
+      return 'Invalid email address. Please check and try again.';
+    case 'auth/user-disabled':
+      return 'This account has been disabled. Please contact support.';
+    case 'auth/user-not-found':
+      return 'No account found with this email. Please check or create a new account.';
+    case 'auth/wrong-password':
+      return 'Incorrect password. Please try again or reset your password.';
+    case 'auth/email-already-in-use':
+      return 'An account with this email already exists. Please log in or use a different email.';
+    case 'auth/weak-password':
+      return 'Password is too weak. Please use a stronger password.';
+    default:
+      return 'An error occurred. Please try again later.';
   }
 }
 
