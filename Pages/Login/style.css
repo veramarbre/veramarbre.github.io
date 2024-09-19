@@ -85,13 +85,17 @@ p {
 header {
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow);
-  position: fixed; /* Fixed position to make it float */
+  transition: top 0.3s ease;
+  width: 100%;
+}
+
+header.floating {
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  z-index: 1000; /* Ensure header stays on top */
-  transition: background-color var(--transition-speed);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 header .container {
@@ -101,7 +105,7 @@ header .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-  height: 60px;
+  height: 60px; /* Adjusted height */
 }
 
 .logo {
