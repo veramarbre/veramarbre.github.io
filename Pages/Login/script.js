@@ -45,8 +45,9 @@ slidingMenu.innerHTML = `
     <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
     <li><a href="/Pages/Login/login.html">Admin Panel</a></li>
   </ul>
-  <div class="menu-bottom">
+  <div class="sign-out-container">
     <button id="signOutButton" style="display: none;" aria-label="Sign Out">Sign Out</button>
+  <div class="menu-bottom">
     <div id="language-switcher">
       <i class="fas fa-globe"></i>
       <select id="language-select" aria-label="Select Language">
