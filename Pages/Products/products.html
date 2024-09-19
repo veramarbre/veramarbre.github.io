@@ -176,6 +176,7 @@ signOutButton.addEventListener('click', async () => {
     await signOut(auth);
     alert('Signed out successfully!');
     signOutButton.style.display = 'none';
+    window.location.href = '/login.html'; // Redirect to login page after sign out
   } catch (error) {
     alert('Error signing out: ' + error.message);
   }
@@ -185,10 +186,17 @@ signOutButton.addEventListener('click', async () => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     signOutButton.style.display = 'block';
+    console.log('User is signed in:', user);
+    // You can redirect to the admin panel or show specific content
+    window.location.href = '/admin-panel.html'; // Example redirect
   } else {
     signOutButton.style.display = 'none';
+    console.log('No user is signed in');
+    // You can redirect to the login page or show a message
+    window.location.href = '/login.html'; // Example redirect
   }
 });
+
       
     </script>
 
