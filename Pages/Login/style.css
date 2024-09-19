@@ -553,17 +553,23 @@ footer a:hover {
   }
 }
 
-/* Sign Out button styles */
 #signOutButton {
-  background-color: var(--button-color);
-  color: var(--primary-color);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px; /* Adjust size as needed */
+    color: var(--button-color);
+    transition: color var(--transition-speed);
 }
 
 #signOutButton:hover {
-  background-color: var(--button-hover-color);
+    color: var(--button-hover-color);
+}
+
+#signOutButton i {
+    color: var(--button-color);
+}
+
+#signOutButton:hover i {
+    color: var(--button-hover-color);
 }
