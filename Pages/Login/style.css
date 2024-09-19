@@ -573,3 +573,31 @@ footer a:hover {
 #signOutButton:hover i {
     color: var(--button-hover-color);
 }
+
+
+/* Admin Info Styles */
+#adminInfo {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.admin-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  box-shadow: var(--box-shadow);
+}
+
+#adminInfo h3 {
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+#adminInfo p {
+  font-size: 1rem;
+  color: var(--text-color);
+  margin: 5px 0;
+}
+
