@@ -619,3 +619,18 @@ nav ul li a:hover::after {
       margin-bottom: 20px;
     }
   }
+
+/* Sign Out button styles */
+#signOutButton {
+  background-color: var(--button-color);
+  color: var(--primary-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+#signOutButton:hover {
+  background-color: var(--button-hover-color);
+}
