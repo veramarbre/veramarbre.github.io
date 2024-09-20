@@ -440,13 +440,22 @@ nav ul li a:hover::after {
   transition: opacity 0.3s ease-in-out;
 }
 
+/* Spinning Circle Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Login Button Loading State */
 .login-btn.loading span {
   opacity: 0;
 }
 
 .login-btn.loading i {
   opacity: 1;
+  animation: spin 1s linear infinite; /* Apply the spinning animation */
 }
+
 
 .form-links {
   display: flex;
@@ -583,7 +592,7 @@ footer a:hover {
 /* Logout Button Styles */
 
 main {
-  margin-top: 50px; /* Adjust the value as needed */
+  margin-top: 60px; /* Adjust the value as needed */
 }
 
 #signOutButton {
