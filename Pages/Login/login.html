@@ -33,8 +33,7 @@
             </li>
           </ul>
         </nav>
-        <button id="signOutButton" style="display: none" aria-label="Sign Out">
-          <i class="fas fa-sign-out-alt"></i>
+        
         </button>
       </div>
     </header>
@@ -58,6 +57,8 @@
               <p>Company: VERA MARBRE™</p>
               <p>Administrator: John Doe</p>
               <p>Email: admin@veramarbre.com</p>
+              <button id="signOutButton" style="display: none" aria-label="Sign Out">
+          <i class="fas fa-sign-out-alt"></i>
             </div>
             <form id="loginForm">
               <div class="form-group">
@@ -209,7 +210,7 @@ document.querySelector('.captcha-refresh').addEventListener('click', function() 
       onAuthStateChanged(auth, (user) => {
         if (user) {
           // User is signed in
-          loginMessage.textContent = `Welcome, ${user.email}!`;
+         
           loginForm.style.display = "none";
           scanMalwareButton.style.display = "block";
           authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
