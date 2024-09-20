@@ -206,25 +206,6 @@ document.querySelector('.captcha-refresh').addEventListener('click', function() 
         this.classList.toggle("fa-eye-slash");
       });
 
-      // Check auth state
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in
-         
-          loginForm.style.display = "none";
-          scanMalwareButton.style.display = "block";
-          authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
-          document
-            .getElementById("logoutLink")
-            .addEventListener("click", handleLogout);
-        } else {
-          // User is signed out
-          loginForm.style.display = "block";
-          loginMessage.textContent = "";
-          scanMalwareButton.style.display = "none";
-          authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
-        }
-      });
 
       // Handle login
       loginForm.addEventListener("submit", async (e) => {
@@ -336,7 +317,6 @@ function refreshCaptcha() {
 
         if (user) {
           // User is signed in
-          loginMessage.textContent = `Welcome, ${user.email}!`;
           loginForm.style.display = "none";
           adminInfo.style.display = "block";
           signOutButton.style.display = "block";
