@@ -105,6 +105,14 @@
           <div id="loginMessage"></div>
         </div>
       </section>
+      <div id="toast" class="toast">
+        <div class="toast-content">
+          <i class="fas fa-shield-alt"></i>
+          <span id="toast-message">Scanning for malware...</span>
+          <button id="toast-close" aria-label="Close">×</button>
+        </div>
+      </div>
+      
     </main>
 
     <!-- Footer -->
@@ -305,15 +313,6 @@ function refreshCaptcha() {
           loginMessage.classList.add("message-animation");
         }
       }
-
-      // Malware scan functionality
-      scanMalwareButton.addEventListener("click", () => {
-        alert("Scanning for malware...");
-        // Placeholder for actual malware scan logic
-        setTimeout(() => {
-          alert("No malware detected!");
-        }, 2000);
-      });
 
       // Error message handler
       function getErrorMessage(errorCode) {
