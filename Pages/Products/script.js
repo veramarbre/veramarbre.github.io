@@ -41,8 +41,8 @@ slidingMenu.innerHTML = `
       <ul>
           <li><a href="/index.html" data-i18n="home">Home</a></li>
           <li><a href="/Pages/Products/products.html" data-i18n="products">Products</a></li>
-          <li><a href="index.html#about" data-i18n="about">About</a></li>
-          <li><a href="index.html#contact" data-i18n="contact">Contact</a></li>
+          <li><a href="/index.html#about" data-i18n="about">About</a></li>
+          <li><a href="/index.html#contact" data-i18n="contact">Contact</a></li>
           <li><a href="/Pages/Login/login.html">Admin Panel</a></li>
       </ul>
       <div class="menu-bottom">
