@@ -611,43 +611,53 @@ main {
 
 
 /* CAPTCHA Styles */
-.captcha-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.form-group {
   margin-bottom: 20px;
 }
 
-.captcha-canvas {
-  border: 1px solid var(--accent-color);
-  border-radius: 5px;
-  background-color: var(--background-color);
-  box-shadow: var(--box-shadow);
-  margin-bottom: 10px;
-  width: 100%; /* Ensure it fits within the container */
-  max-width: 300px; /* Adjust as needed */
-  height: 30px; /* Set a fixed height */
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.captcha-input {
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#captchaCanvas {
+  width: 100%; /* Full width of container */
+  height: 50px; /* Fixed height */
+  border: 1px solid var(--accent-color, #ccc);
+  border-radius: 5px 5px 0 0;
+  background-color: #f0f0f0; /* Light gray background */
+  margin-bottom: 10px; /* Add bottom margin here */
+}
+
+#captchaInput {
   width: 100%;
   padding: 10px;
-  border: 1px solid var(--accent-color);
-  border-radius: 5px;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  box-shadow: var(--box-shadow);
+  border: 1px solid var(--accent-color, #ccc);
+  border-radius: 5px; /* Changed to fully rounded corners */
+  background-color: #ffffff;
+  color: #333;
+  font-family: 'Arial', sans-serif;
 }
 
 .captcha-refresh {
+  position: absolute;
+  right: 10px;
+  top: 10px;
   cursor: pointer;
-  color: var(--accent-color);
-  transition: color var(--transition-speed);
-  margin-top: 10px;
+  color: var(--accent-color, #666);
+  transition: color 0.3s;
 }
 
 .captcha-refresh:hover {
-  color: var(--secondary-color);
+  color: #333;
 }
 
 /* Malware Scan Button Styles */
