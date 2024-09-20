@@ -621,7 +621,7 @@ main {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--accent-color, #ccc);
-  border-radius: 5px; /* Changed to fully rounded corners */
+  border-radius: 0 0 5px 5px; /* Rounded corners for bottom only */
   background-color: #ffffff;
   color: #333;
   font-family: 'Arial', sans-serif;
@@ -635,6 +635,11 @@ main {
   color: var(--accent-color, #666);
   transition: color 0.3s;
 }
+
+.captcha-refresh:hover {
+  color: var(--accent-color-hover, #333);
+}
+
 
 #signOutButton {
   display: flex;
