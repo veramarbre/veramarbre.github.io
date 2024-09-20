@@ -454,6 +454,10 @@ nav ul li a:hover::after {
 .login-btn.loading i {
   opacity: 1;
   animation: spin 1s linear infinite; /* Apply the spinning animation */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the spinner */
 }
 
 
