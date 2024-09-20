@@ -325,10 +325,7 @@ function refreshCaptcha() {
           signOutButton.style.display = "block";
           loginHeader.style.display = "none";
           loginDescription.style.display = "none";
-          authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
-          document
-            .getElementById("logoutLink")
-            .addEventListener("click", handleLogout);
+         
         } else {
           // User is signed out
           loginForm.style.display = "block";
@@ -337,7 +334,7 @@ function refreshCaptcha() {
           signOutButton.style.display = "none";
           loginHeader.style.display = "block";
           loginDescription.style.display = "block";
-          authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
+
         }
       });
 
