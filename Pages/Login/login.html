@@ -150,6 +150,7 @@ loginForm.addEventListener('submit', async (e) => {
 
   // Show loading spinner
   loginBtn.classList.add('loading');
+  loginBtn.querySelector('i').style.display = 'inline-block';
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -163,8 +164,10 @@ loginForm.addEventListener('submit', async (e) => {
   } finally {
     // Hide loading spinner
     loginBtn.classList.remove('loading');
+    loginBtn.querySelector('i').style.display = 'none';
   }
 });
+
 
 // Handle logout
 async function handleLogout() {
