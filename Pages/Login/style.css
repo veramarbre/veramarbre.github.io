@@ -636,6 +636,30 @@ main {
   transition: color 0.3s;
 }
 
+#signOutButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Match parent width */
+  background-color: #f44336; /* Initial background color */
+  color: white; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Animation */
+}
+
+#signOutButton i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+#signOutButton:hover {
+  background-color: #d32f2f; /* Red when hovered */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
 .captcha-refresh:hover {
   color: #333;
 }
