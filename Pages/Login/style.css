@@ -659,28 +659,3 @@ main {
 .captcha-refresh:hover {
   color: #333;
 }
-
-/* Malware Scan Button Styles */
-#scanMalwareButton {
-  background-color: var(--button-color);
-  color: var(--primary-color);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto; /* Center the button */
-}
-
-#scanMalwareButton:hover {
-  background-color: var(--button-hover-color);
-  color: var(--primary-color);
-}
-
-#scanMalwareButton i {
-  margin-right: 8px; /* Add some space between the icon and text */
-}
