@@ -643,6 +643,7 @@ main {
   cursor: pointer;
   color: var(--accent-color);
   transition: color var(--transition-speed);
+  margin-top: 10px;
 }
 
 .captcha-refresh:hover {
@@ -662,7 +663,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto; /* Center the button */
 }
 
 #scanMalwareButton:hover {
