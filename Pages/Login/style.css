@@ -624,6 +624,9 @@ main {
   background-color: var(--background-color);
   box-shadow: var(--box-shadow);
   margin-bottom: 10px;
+  width: 100%; /* Ensure it fits within the container */
+  max-width: 300px; /* Adjust as needed */
+  height: 50px; /* Set a fixed height */
 }
 
 .captcha-input {
