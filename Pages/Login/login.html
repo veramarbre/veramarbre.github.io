@@ -32,53 +32,62 @@
           </ul>
         </nav>
         <button id="signOutButton" style="display: none;" aria-label="Sign Out">
-    <i class="fas fa-sign-out-alt"></i>
-</button>
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
       </div>
     </header>
 
     <!-- Main Content -->
-<main role="main">
-  <section class="login-section">
-    <div class="container">
-      <h2>Administrator Login</h2>
-      <p class="login-description">This page is reserved for administrator access only</p>
-      <div class="login-form">
-        <div id="adminInfo" style="display: none;">
-        <img src="https://cdn-icons-png.flaticon.com/128/2965/2965279.png" alt="Admin Photo" class="admin-photo">
-        <h3>Welcome, Admin!</h3>
-        <p>Company: VERA MARBRE™</p>
-        <p>Administrator: John Doe</p>
-        <p>Email: admin@veramarbre.com</p>
-      </div>
-        <form id="loginForm">
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <div class="input-icon-wrapper">
-              <i class="fas fa-envelope"></i>
-              <input type="email" id="email" name="email" required>
+    <main role="main">
+      <section class="login-section">
+        <div class="container">
+          <h2>Administrator Login</h2>
+          <p class="login-description">This page is reserved for administrator access only</p>
+          <div class="login-form">
+            <div id="adminInfo" style="display: none;">
+              <img src="https://cdn-icons-png.flaticon.com/128/2965/2965279.png" alt="Admin Photo" class="admin-photo">
+              <h3>Welcome, Admin!</h3>
+              <p>Company: VERA MARBRE™</p>
+              <p>Administrator: John Doe</p>
+              <p>Email: admin@veramarbre.com</p>
             </div>
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <div class="input-icon-wrapper">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="email" name="email" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="input-icon-wrapper">
+                  <i class="fas fa-lock"></i>
+                  <input type="password" id="password" name="password" required>
+                  <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="captcha">Captcha:</label>
+                <div class="input-icon-wrapper">
+                  <canvas id="captchaCanvas"></canvas>
+                  <input type="text" id="captchaInput" name="captcha" required>
+                </div>
+              </div>
+              <button type="submit" class="login-btn">
+                <span>Login</span>
+                <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+              </button>
+            </form>
+            <div class="form-links"></div>
           </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <div class="input-icon-wrapper">
-              <i class="fas fa-lock"></i>
-              <input type="password" id="password" name="password" required>
-              <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-            </div>
-          </div>
-          <button type="submit" class="login-btn">
-            <span>Login</span>
-            <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+          <div id="loginMessage"></div>
+          <button id="scanMalwareButton" style="display: none;" aria-label="Scan for Malware">
+            <i class="fas fa-shield-alt"></i> Scan for Malware
           </button>
-        </form>
-        <div class="form-links"></div>
-      </div>
-      <div id="loginMessage"></div>
-      
-    </div>
-  </section>
-</main>
+        </div>
+      </section>
+    </main>
 
     <!-- Footer -->
     <footer role="contentinfo">
@@ -91,169 +100,207 @@
     </footer>
 
     <script type="module">
-      
-  // admin-login.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+      // admin-login.js
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
-  authDomain: "vera-marbre.firebaseapp.com",
-  projectId: "vera-marbre",
-  storageBucket: "vera-marbre.appspot.com",
-  messagingSenderId: "58963574008",
-  appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
-  measurementId: "G-KGP6L8PG9M",
-};
+      const firebaseConfig = {
+        apiKey: "AIzaSyDGthkRpERFT4j4Tw9p3mMII9SHVtfTvOo",
+        authDomain: "vera-marbre.firebaseapp.com",
+        projectId: "vera-marbre",
+        storageBucket: "vera-marbre.appspot.com",
+        messagingSenderId: "58963574008",
+        appId: "1:58963574008:web:39353c784e3a8b031d0f0d",
+        measurementId: "G-KGP6L8PG9M",
+      };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
 
-// DOM elements
-const loginForm = document.getElementById('loginForm');
-const loginMessage = document.getElementById('loginMessage');
-const authMenuItem = document.getElementById('authMenuItem');
-const togglePassword = document.getElementById('togglePassword');
-const passwordInput = document.getElementById('password');
-const loginBtn = loginForm.querySelector('.login-btn');
+      // DOM elements
+      const loginForm = document.getElementById('loginForm');
+      const loginMessage = document.getElementById('loginMessage');
+      const authMenuItem = document.getElementById('authMenuItem');
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      const loginBtn = loginForm.querySelector('.login-btn');
+      const scanMalwareButton = document.getElementById('scanMalwareButton');
+      const captchaCanvas = document.getElementById('captchaCanvas');
+      const captchaInput = document.getElementById('captchaInput');
 
-// Toggle password visibility
-togglePassword.addEventListener('click', function() {
-  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-  passwordInput.setAttribute('type', type);
-  this.classList.toggle('fa-eye');
-  this.classList.toggle('fa-eye-slash');
-});
+      // Generate CAPTCHA
+      function generateCaptcha() {
+        const ctx = captchaCanvas.getContext('2d');
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captchaText = '';
+        for (let i = 0; i < 6; i++) {
+          captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        ctx.clearRect(0, 0, captchaCanvas.width, captchaCanvas.height);
+        ctx.font = '30px Arial';
+        ctx.fillText(captchaText, 10, 30);
+        return captchaText;
+      }
 
-// Check auth state
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in
-    loginMessage.textContent = `Welcome, ${user.email}!`;
-    loginForm.style.display = 'none';
-    authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
-    document.getElementById('logoutLink').addEventListener('click', handleLogout);
-  } else {
-    // User is signed out
-    loginForm.style.display = 'block';
-    loginMessage.textContent = '';
-    authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
-  }
-});
+      let captchaText = generateCaptcha();
 
-// Handle login
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+      // Toggle password visibility
+      togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
 
-  // Show loading spinner
-  loginBtn.classList.add('loading');
-  loginBtn.querySelector('i').style.display = 'inline-block';
+      // Check auth state
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in
+          loginMessage.textContent = `Welcome, ${user.email}!`;
+          loginForm.style.display = 'none';
+          scanMalwareButton.style.display = 'block';
+          authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
+          document.getElementById('logoutLink').addEventListener('click', handleLogout);
+        } else {
+          // User is signed out
+          loginForm.style.display = 'block';
+          loginMessage.textContent = '';
+          scanMalwareButton.style.display = 'none';
+          authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
+        }
+      });
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    loginMessage.textContent = 'Login successful!';
-    loginMessage.style.color = 'green';
-    loginMessage.classList.add('message-animation');
-  } catch (error) {
-    loginMessage.textContent = getErrorMessage(error.code);
-    loginMessage.style.color = 'red';
-    loginMessage.classList.add('message-animation');
-  } finally {
-    // Hide loading spinner
-    loginBtn.classList.remove('loading');
-    loginBtn.querySelector('i').style.display = 'none';
-  }
-});
+      // Handle login
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const captcha = captchaInput.value;
 
+        if (captcha !== captchaText) {
+          loginMessage.textContent = 'Invalid CAPTCHA. Please try again.';
+          loginMessage.style.color = 'red';
+          loginMessage.classList.add('message-animation');
+          captchaText = generateCaptcha(); // Regenerate CAPTCHA
+          return;
+        }
 
-// Handle logout
-async function handleLogout() {
-  try {
-    await signOut(auth);
-    loginMessage.textContent = 'Logged out successfully!';
-    loginMessage.style.color = 'green';
-    loginMessage.classList.add('message-animation');
-  } catch (error) {
-    loginMessage.textContent = getErrorMessage(error.code);
-    loginMessage.style.color = 'red';
-    loginMessage.classList.add('message-animation');
-  }
-}
+        // Show loading spinner
+        loginBtn.classList.add('loading');
+        loginBtn.querySelector('i').style.display = 'inline-block';
 
+                try {
+          await signInWithEmailAndPassword(auth, email, password);
+          loginMessage.textContent = 'Login successful!';
+          loginMessage.style.color = 'green';
+          loginMessage.classList.add('message-animation');
+        } catch (error) {
+          loginMessage.textContent = getErrorMessage(error.code);
+          loginMessage.style.color = 'red';
+          loginMessage.classList.add('message-animation');
+          // Log failed login attempt
+          await logFailedLoginAttempt(email, error.code);
+        } finally {
+          // Hide loading spinner
+          loginBtn.classList.remove('loading');
+          loginBtn.querySelector('i').style.display = 'none';
+        }
+      });
 
-// Error message handler
-function getErrorMessage(errorCode) {
-  switch (errorCode) {
-    case 'auth/invalid-email':
-      return 'Invalid email address. Please check and try again.';
-    case 'auth/user-disabled':
-      return 'This account has been disabled. Please contact support.';
-    case 'auth/user-not-found':
-      return 'No account found with this email. Please check or create a new account.';
-    case 'auth/wrong-password':
-      return 'Incorrect password. Please try again or reset your password.';
-    case 'auth/email-already-in-use':
-      return 'An account with this email already exists. Please log in or use a different email.';
-    case 'auth/weak-password':
-      return 'Password is too weak. Please use a stronger password.';
-    default:
-      return 'An error occurred. Please try again later.';
-  }
-}
+      // Log failed login attempt
+      async function logFailedLoginAttempt(email, errorCode) {
+        try {
+          await addDoc(collection(db, "failedLogins"), {
+            email: email,
+            errorCode: errorCode,
+            timestamp: new Date().toISOString()
+          });
+        } catch (e) {
+          console.error("Error logging failed login attempt: ", e);
+        }
+      }
 
-// Handle sign out
-const signOutButton = document.getElementById('signOutButton');
-signOutButton.addEventListener('click', async () => {
-  try {
-    await signOut(auth);
-    alert('Signed out successfully!');
-    signOutButton.style.display = 'none';
-  } catch (error) {
-    alert('Error signing out: ' + error.message);
-  }
-});
+      // Handle logout
+      async function handleLogout() {
+        try {
+          await signOut(auth);
+          loginMessage.textContent = 'Logged out successfully!';
+          loginMessage.style.color = 'green';
+          loginMessage.classList.add('message-animation');
+        } catch (error) {
+          loginMessage.textContent = getErrorMessage(error.code);
+          loginMessage.style.color = 'red';
+          loginMessage.classList.add('message-animation');
+        }
+      }
 
-// Check auth state
-onAuthStateChanged(auth, (user) => {
-  const loginHeader = document.querySelector('.login-section h2');
-  const loginDescription = document.querySelector('.login-section p.login-description');
-  const signOutButton = document.getElementById('signOutButton');
-  const adminInfo = document.getElementById('adminInfo');
-  const loginForm = document.getElementById('loginForm');
-  const loginMessage = document.getElementById('loginMessage');
-  const authMenuItem = document.getElementById('authMenuItem');
+      // Malware scan functionality
+      scanMalwareButton.addEventListener('click', () => {
+        alert('Scanning for malware...');
+        // Placeholder for actual malware scan logic
+        setTimeout(() => {
+          alert('No malware detected!');
+        }, 2000);
+      });
 
-  if (user) {
-    // User is signed in
-    loginMessage.textContent = `Welcome, ${user.email}!`;
-    loginForm.style.display = 'none';
-    adminInfo.style.display = 'block';
-    signOutButton.style.display = 'block';
-    loginHeader.style.display = 'none';
-    loginDescription.style.display = 'none';
-    authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
-    document.getElementById('logoutLink').addEventListener('click', handleLogout);
-  } else {
-    // User is signed out
-    loginForm.style.display = 'block';
-    loginMessage.textContent = '';
-    adminInfo.style.display = 'none';
-    signOutButton.style.display = 'none';
-    loginHeader.style.display = 'block';
-    loginDescription.style.display = 'block';
-    authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
-  }
-});
+      // Error message handler
+      function getErrorMessage(errorCode) {
+        switch (errorCode) {
+          case 'auth/invalid-email':
+            return 'Invalid email address. Please check and try again.';
+          case 'auth/user-disabled':
+            return 'This account has been disabled. Please contact support.';
+          case 'auth/user-not-found':
+            return 'No account found with this email. Please check or create a new account.';
+          case 'auth/wrong-password':
+            return 'Incorrect password. Please try again or reset your password.';
+          case 'auth/email-already-in-use':
+            return 'An account with this email already exists. Please log in or use a different email.';
+          case 'auth/weak-password':
+            return 'Password is too weak. Please use a stronger password.';
+          default:
+            return 'An error occurred. Please try again later.';
+        }
+      }
 
+      // Check auth state
+      onAuthStateChanged(auth, (user) => {
+        const loginHeader = document.querySelector('.login-section h2');
+        const loginDescription = document.querySelector('.login-section p.login-description');
+        const signOutButton = document.getElementById('signOutButton');
+        const adminInfo = document.getElementById('adminInfo');
+        const loginForm = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+        const authMenuItem = document.getElementById('authMenuItem');
 
+        if (user) {
+          // User is signed in
+          loginMessage.textContent = `Welcome, ${user.email}!`;
+          loginForm.style.display = 'none';
+          adminInfo.style.display = 'block';
+          signOutButton.style.display = 'block';
+          loginHeader.style.display = 'none';
+          loginDescription.style.display = 'none';
+          authMenuItem.innerHTML = '<a href="#" id="logoutLink">Logout</a>';
+          document.getElementById('logoutLink').addEventListener('click', handleLogout);
+        } else {
+          // User is signed out
+          loginForm.style.display = 'block';
+          loginMessage.textContent = '';
+          adminInfo.style.display = 'none';
+          signOutButton.style.display = 'none';
+          loginHeader.style.display = 'block';
+          loginDescription.style.display = 'block';
+          authMenuItem.innerHTML = '<a href="admin-login.html">Login</a>';
+        }
+      });
 
-// Animation for login form
-loginForm.classList.add('form-animation');
-      
-</script>
+      // Animation for login form
+      loginForm.classList.add('form-animation');
+    </script>
     
     <script src="/Pages/Login/script.js"></script>
   </body>
