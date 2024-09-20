@@ -440,24 +440,26 @@ nav ul li a:hover::after {
   transition: opacity 0.3s ease-in-out;
 }
 
-/* Spinning Circle Animation */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Center spinner next to the login text */
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-/* Login Button Loading State */
-.login-btn.loading span {
+.login-btn i {
+  margin-right: 10px; /* Add space between the spinner and the text */
   opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.login-btn.loading span {
+  opacity: 1; /* Keep the text visible */
 }
 
 .login-btn.loading i {
   opacity: 1;
-  animation: spin 1s linear infinite; /* Apply the spinning animation */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the spinner */
 }
 
 
