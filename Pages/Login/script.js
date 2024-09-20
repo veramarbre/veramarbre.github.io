@@ -182,4 +182,41 @@ window.addEventListener("scroll", function () {
   }
 });
 
- 
+// Function to show toast notification
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  const toastMessage = document.getElementById("toast-message");
+  toastMessage.textContent = message;
+  toast.classList.add("show");
+
+  // Hide the toast after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
+// Close toast notification when close button is clicked
+document.getElementById("toast-close").addEventListener("click", () => {
+  document.getElementById("toast").classList.remove("show");
+});
+
+// Simulated malware scan logic
+function simulateMalwareScan() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const malwareDetected = Math.random() < 0.3; // 30% chance of detecting malware
+      resolve(malwareDetected);
+    }, 3000); // Simulate a 3-second scan
+  });
+}
+
+// Malware scan functionality
+scanMalwareButton.addEventListener("click", async () => {
+  showToast("Scanning for malware...", true);
+  const malwareDetected = await simulateMalwareScan();
+  if (malwareDetected) {
+    showToast("Malware detected! Please take action.", false);
+  } else {
+    showToast("No malware detected!", false);
+  }
+});
