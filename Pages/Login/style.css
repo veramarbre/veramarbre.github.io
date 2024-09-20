@@ -353,7 +353,7 @@ nav ul li a:hover::after {
 
 .login-section h2 {
   color: var(--text-color); /* Ensure this color contrasts with the background */
-  margin-top: 40px; /* Adjust the value as needed */
+  margin-top: 0px; /* Adjust the value as needed */
 }
 
 .login-description {
