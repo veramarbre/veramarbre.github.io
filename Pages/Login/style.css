@@ -411,6 +411,7 @@ nav ul li a:hover::after {
   color: var(--text-color);
 }
 
+/* Login Button Styles */
 .login-btn {
   width: 100%;
   padding: 10px;
@@ -420,6 +421,9 @@ nav ul li a:hover::after {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
 }
 
@@ -432,28 +436,12 @@ nav ul li a:hover::after {
 }
 
 .login-btn i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-/* Center spinner next to the login text */
-.login-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.login-btn i {
   margin-right: 10px; /* Add space between the spinner and the text */
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
+/* Show spinner when loading */
 .login-btn.loading span {
   opacity: 1; /* Keep the text visible */
 }
