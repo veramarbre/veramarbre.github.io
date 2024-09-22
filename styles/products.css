@@ -705,26 +705,6 @@ footer a:hover {
 }
 
 
-.loading-spinner {
-  display: none;
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-  margin: auto;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 /* Overlay */
 .overlay {
@@ -890,3 +870,52 @@ footer a:hover {
   from { transform: translateY(-20px); }
   to { transform: translateY(0); }
 }
+
+/* Ensure html and body take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Parent container styles */
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the parent takes at least the full viewport height */
+}
+
+/* Ensure main matches the parent */
+main {
+  flex: 1; /* This makes the main element take up the remaining space */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+/* CSS to center the animation within the main content */
+#products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#loadingWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loadingSpinner {
+  width: 100px; /* Adjust the size as needed */
+  height: 100px; /* Adjust the size as needed */
+}
+
+
