@@ -237,5 +237,5 @@ var animation = bodymovin.loadAnimation({
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://lottie.host/fd7be200-989d-4d08-b9b9-158bf2f66824/sNknZbizci.json' // lottie file path
+    path: 'https://lottie.host/683e7d57-be5c-478b-9111-f151a2e5a661/Mg7XBvA6kR.json' // lottie file path
   })
