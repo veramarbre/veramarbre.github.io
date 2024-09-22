@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - VERA MARBRE™</title>
+    <link rel="stylesheet" href="/styles/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header role="banner">
+      <div class="container">
+        <div class="menu-icon" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+          <a href="../index.html" aria-label="STONE™ Homepage">
+            <h1>VERA MARBRE™</h1>
+          </a>
+        </div>
+        <nav role="navigation" aria-label="Main Navigation">
+          <ul>
+            <li><a href="../index.html" data-i18n="home">Home</a></li>
+            <li><a href="#products" data-i18n="products">Products</a></li>
+            <li><a href="index.html#about" data-i18n="about">About</a></li>
+            <li>
+              <a href="index.html#contact" data-i18n="contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+        
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main">
+      <section class="login-section">
+        <div class="container">
+          <h2>Administrator Login</h2>
+          <p class="login-description">
+            This page is reserved for administrator access only
+          </p>
+          <div class="login-form">
+            <div id="adminInfo" style="display: none">
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/2965/2965279.png"
+                alt="Admin Photo"
+                class="admin-photo"/>
+              
+              <h3>Welcome, Admin!</h3>
+              <p>Company: VERA MARBRE™</p>
+              <p>Administrator: John Doe</p>
+              <p>Email: admin@veramarbre.com</p>
+              
+              <button id="signOutButton" style="display: none" aria-label="Sign Out">
+  <i class="fas fa-power-off"></i> Sign Out
+</button>
+            </div>
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="email">Email:</label>
+  <div class="input-icon-wrapper">
+    <i class="fas fa-envelope"></i>
+    <input type="email" id="email" name="email" autocomplete="email" required />
+
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="input-icon-wrapper">
+                  <i class="fas fa-lock"></i>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                  />
+                  <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+              </div>
+              <div class="form-group-login">
+                <label for="captchaInput">Captcha:</label>
+<div class="input-icon-wrapper">
+  <canvas id="captchaCanvas"></canvas>
+  <span class="captcha-refresh">↻</span> <!-- Refresh symbol -->
+  <input type="text" id="captchaInput" name="captcha" required />
+
+              </div>
+              <button type="submit" class="login-btn">
+                <i class="fas fa-spinner fa-spin" style="display: none"></i>
+                <span>Login</span>
+              </button>
+            </form>
+            
+          </div>
+        </div>
+        <div id="loginMessage"></div>
+      </section>
+      </div>
+      
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+      <div class="container">
+        <p>
+          © 2023 VERA MARBRE™. All rights reserved. |
+          <a href="privacy.html" aria-label="Privacy Policy">Privacy Policy</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="/scripts/script.js"></script>
+    <script type="module" src="/scripts/auth.js"></script>
+
+  </body>
+</html>
