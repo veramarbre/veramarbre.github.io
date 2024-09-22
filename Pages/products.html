@@ -11,6 +11,7 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js'></script>
     
   </head>
 
@@ -79,7 +80,7 @@
     <!-- Main Content -->
     <main role="main">
       <section class="products-section">
-        <div class="container">
+        <div class="container" id="products-container">
           <h2 data-i18n="ourProducts">Our Products</h2>
           <div class="search-box">
             <input
@@ -94,7 +95,12 @@
             <button id="addButton" data-tooltip="Add Product"><i class="fas fa-plus"></i></button>
             </button>
           </div>
-          <div class="loading-spinner" id="loadingSpinner"></div>
+          
+          <div id="loadingWrapper">
+            <div id="loadingSpinner"></div>
+          </div>
+          
+
           <div class="product-grid" id="productGrid">
             <!-- Products will be dynamically loaded here -->
           </div>
