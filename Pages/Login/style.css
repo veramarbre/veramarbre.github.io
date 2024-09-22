@@ -382,6 +382,16 @@ nav ul li a:hover::after {
   color: var(--text-color);
 }
 
+.form-group-login {
+  margin-bottom: 0px;
+}
+
+.form-group-login label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-color);
+}
+
 .input-icon-wrapper {
   position: relative;
 }
