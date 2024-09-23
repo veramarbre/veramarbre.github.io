@@ -241,28 +241,3 @@ window.addEventListener("scroll", function () {
     header.classList.remove("floating");
   }
 });
-
-// Cookie Consent functionality
-document.addEventListener("DOMContentLoaded", () => {
-  const cookieConsent = document.getElementById("cookie-consent");
-  const acceptCookiesButton = document.getElementById("accept-cookies");
-  const declineCookiesButton = document.getElementById("decline-cookies");
-
-  // Show the cookie consent toast if not already accepted
-  if (!localStorage.getItem("cookiesAccepted")) {
-    setTimeout(() => {
-      cookieConsent.classList.add("show");
-    }, 500); // Delay to show the toast with animation
-  }
-
-  // Handle the accept cookies button click
-  acceptCookiesButton.addEventListener("click", () => {
-    localStorage.setItem("cookiesAccepted", "true");
-    cookieConsent.classList.remove("show");
-  });
-
-  // Handle the decline cookies button click
-  declineCookiesButton.addEventListener("click", () => {
-    cookieConsent.classList.remove("show");
-  });
-});

@@ -35,30 +35,30 @@ const menuIcon = document.querySelector(".menu-icon");
 const slidingMenu = document.createElement("div");
 slidingMenu.classList.add("sliding-menu");
 slidingMenu.innerHTML = `
-      <div class="close-icon" aria-label="Close Menu">
-          <i class="fas fa-times"></i>
-      </div>
-      <ul>
-          <li><a href="/index.html" data-i18n="home">Home</a></li>
-          <li><a href="/Pages/products.html" data-i18n="products">Products</a></li>
-          <li><a href="/index.html#about" data-i18n="about">About</a></li>
-          <li><a href="/index.html#contact" data-i18n="contact">Contact</a></li>
-          <li><a href="/Pages/login.html">Admin Panel</a></li>
-      </ul>
-      <div class="menu-bottom">
-          <div id="language-switcher">
-              <i class="fas fa-globe"></i>
-              <select id="language-select" aria-label="Select Language">
-                  <option value="en">English</option>
-                  <option value="fr">Français</option>
-                  <option value="ar">العربية</option>
-              </select>
-          </div>
-          <div id="dark-mode-toggle">
-              <i class="fas fa-moon"></i>
-          </div>
-      </div>
-  `;
+    <div class="close-icon" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+    </div>
+    <ul>
+        <li><a href="#home" data-i18n="home">Home</a></li>
+        <li><a href="/Pages/products.html" data-i18n="products">Products</a></li>
+        <li><a href="#about" data-i18n="about">About</a></li>
+        <li><a href="#contact" data-i18n="contact">Contact</a></li>
+        <li><a href="/Pages/login.html">Admin Panel</a></li>
+    </ul>
+    <div class="menu-bottom">
+        <div id="language-switcher">
+            <i class="fas fa-globe"></i>
+            <select id="language-select" aria-label="Select Language">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+        <div id="dark-mode-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+    </div>
+`;
 document.body.appendChild(slidingMenu);
 
 menuIcon.addEventListener("click", () => {

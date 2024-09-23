@@ -230,12 +230,11 @@ onAuthStateChanged(auth, (user) => {
 });
 
 
-
-
+     // Lottie Animation
 var animation = bodymovin.loadAnimation({
     container: document.getElementById('loadingSpinner'),
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: 'https://lottie.host/7fc9476a-4db0-45bb-8a73-cd6f0221ad38/a1XW0gV3TF.json' // lottie file path
+    path: 'https://lottie.host/fd7be200-989d-4d08-b9b9-158bf2f66824/sNknZbizci.json' // lottie file path
   })
